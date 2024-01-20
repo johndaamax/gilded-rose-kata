@@ -14,7 +14,7 @@ ITEM_VAULT.set("Aged Brie", (item) => {
   item.quality = getNextQuality(item.quality + 1);
   item.sellIn -= 1;
 });
-ITEM_VAULT.set("Backstage passes to a TAFKAL80ETC concert", (item) => {
+ITEM_VAULT.set("Backstage passes", (item) => {
   // increase quality of backstage passes according to the requirements
   if (item.sellIn < 0) {
     item.quality = 0;
@@ -27,13 +27,14 @@ ITEM_VAULT.set("Backstage passes to a TAFKAL80ETC concert", (item) => {
   }
   item.sellIn -= 1;
 });
-ITEM_VAULT.set("Conjured Mana Cake", (item: Item, degradingQuality: number) => {
+ITEM_VAULT.set("Conjured", (item: Item, degradingQuality: number) => {
   // lower the quality of Conjured items twice as much
   const CONJURED_DEGRADING_QUALITY = 2 * degradingQuality;
   item.quality = getNextQuality(item.quality - CONJURED_DEGRADING_QUALITY);
   item.sellIn -= 1;
 });
 ITEM_VAULT.set("***", (item: Item, degradingQuality: number) => {
+  // general case, when nothing else matches
   item.quality = getNextQuality(item.quality - degradingQuality);
   item.sellIn -= 1;
 });

@@ -1,4 +1,5 @@
 import { ITEM_VAULT } from "./vault";
+import { getKeyOfItemVault } from "./utils";
 
 class Item {
   public name: string;
@@ -23,8 +24,7 @@ class Shop {
     this.items.forEach((item) => {
       const degradingQuality =
         item.sellIn < 0 ? 2 * BASE_DEGRADING_QUALITY : BASE_DEGRADING_QUALITY;
-      // handle *** as anything else that is not in the vault (base case)
-      const qualityHandler = ITEM_VAULT.get(item.name) || ITEM_VAULT.get("***");
+      const qualityHandler = ITEM_VAULT.get(getKeyOfItemVault(item));
       qualityHandler?.(item, degradingQuality);
     });
     return this.items;
