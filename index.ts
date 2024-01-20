@@ -11,9 +11,13 @@ class Item {
     this.quality = quality;
   }
 }
-
+// the base value of how much the quality will degrade each day
+const BASE_DEGRADING_QUALITY = 1;
 // create a vault of items that have the item name as keys and a function to update quality and sell date as values
-const ITEM_VAULT = new Map<string, (item: Item) => void>();
+const ITEM_VAULT = new Map<
+  string,
+  (item: Item, degradingQuality: number) => void
+>();
 
 // Sulfuras never needs to update quality or sell date
 ITEM_VAULT.set("Sulfuras, Hand of Ragnaros", (_) => {});
@@ -35,6 +39,12 @@ ITEM_VAULT.set("Backstage passes to a TAFKAL80ETC concert", (item) => {
   }
   item.sellIn -= 1;
 });
+ITEM_VAULT.set("Conjured Mana Cake", (item: Item, degradingQuality: number) => {
+  // lower the quality of Conjured items twice as much
+  const CONJURED_DEGRADING_QUALITY = 2 * degradingQuality;
+  item.quality = getNextQuality(item.quality - CONJURED_DEGRADING_QUALITY);
+  item.sellIn -= 1;
+});
 
 class Shop {
   public items: Item[];
@@ -43,8 +53,10 @@ class Shop {
   }
   updateQuality() {
     this.items.forEach((item) => {
+      const degradingQuality =
+        item.sellIn < 0 ? 2 * BASE_DEGRADING_QUALITY : BASE_DEGRADING_QUALITY;
       const qualityHandler = ITEM_VAULT.get(item.name);
-      qualityHandler?.(item);
+      qualityHandler?.(item, degradingQuality);
     });
     return this.items;
   }
