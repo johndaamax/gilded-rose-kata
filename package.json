@@ -1,0 +1,19 @@
+{
+  "name": "gilded-rose-kata",
+  "version": "0.0.1",
+  "description": "\"A popular refactoring challenge kata\"",
+  "main": "index.ts",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [
+    "kata",
+    "gilded-rose"
+  ],
+  "author": "johndaamax",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.1"
+  }
+}
