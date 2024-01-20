@@ -1,8 +1,8 @@
 import { Item } from ".";
 import { ITEM_VAULT } from "./vault";
 
-const MAX_QUALITY_LIMIT = 50;
-const MIN_QUALITY_LIMIT = 0;
+export const MAX_QUALITY_LIMIT = 50;
+export const MIN_QUALITY_LIMIT = 0;
 
 // helper to set bounds to our quality
 export const getNextQuality = (nextQuality: number): number => {
