@@ -74,4 +74,18 @@ describe("Gilded Rose", function () {
       expect(items[0].sellIn).toBe(-3);
     });
   });
+  describe("Other items", () => {
+    it("should decrease quality by 1 (base) when its sell day > 0", function () {
+      const gildedRose = new Shop([new Item("Healing Potion", 3, 2)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(1);
+      expect(items[0].sellIn).toBe(2);
+    });
+    it("should decrease quality by 2 * 1 (base) when its sell day < 0", function () {
+      const gildedRose = new Shop([new Item("Elixir of the Mongoose", -1, 7)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(5);
+      expect(items[0].sellIn).toBe(-2);
+    });
+  });
 });
