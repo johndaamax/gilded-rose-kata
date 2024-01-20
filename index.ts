@@ -45,6 +45,10 @@ ITEM_VAULT.set("Conjured Mana Cake", (item: Item, degradingQuality: number) => {
   item.quality = getNextQuality(item.quality - CONJURED_DEGRADING_QUALITY);
   item.sellIn -= 1;
 });
+ITEM_VAULT.set("***", (item: Item, degradingQuality: number) => {
+  item.quality = getNextQuality(item.quality - degradingQuality);
+  item.sellIn -= 1;
+});
 
 class Shop {
   public items: Item[];
@@ -55,7 +59,8 @@ class Shop {
     this.items.forEach((item) => {
       const degradingQuality =
         item.sellIn < 0 ? 2 * BASE_DEGRADING_QUALITY : BASE_DEGRADING_QUALITY;
-      const qualityHandler = ITEM_VAULT.get(item.name);
+      // handle *** as anything else that is not in the vault (base case)
+      const qualityHandler = ITEM_VAULT.get(item.name) || ITEM_VAULT.get("***");
       qualityHandler?.(item, degradingQuality);
     });
     return this.items;
