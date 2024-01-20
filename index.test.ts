@@ -60,4 +60,18 @@ describe("Gilded Rose", function () {
       expect(items[0].sellIn).toBe(11);
     });
   });
+  describe("Conjured items", () => {
+    it("should decrease quality by 2 when its sell day > 0", function () {
+      const gildedRose = new Shop([new Item("Conjured Mana Cake", 2, 35)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(33);
+      expect(items[0].sellIn).toBe(1);
+    });
+    it("should decrease quality by 2 * 2 when its sell day < 0", function () {
+      const gildedRose = new Shop([new Item("Conjured Mana Cake", -2, 10)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(6);
+      expect(items[0].sellIn).toBe(-3);
+    });
+  });
 });
