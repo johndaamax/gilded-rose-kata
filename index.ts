@@ -22,6 +22,19 @@ ITEM_VAULT.set("Aged Brie", (item) => {
   item.quality = getNextQuality(item.quality + 1);
   item.sellIn -= 1;
 });
+ITEM_VAULT.set("Backstage passes to a TAFKAL80ETC concert", (item) => {
+  // increase quality of backstage passes according to the requirements
+  if (item.sellIn < 0) {
+    item.quality = 0;
+  } else if (item.sellIn <= 5) {
+    item.quality = getNextQuality(item.quality + 3);
+  } else if (item.sellIn <= 10) {
+    item.quality = getNextQuality(item.quality + 2);
+  } else {
+    item.quality = getNextQuality(item.quality + 1);
+  }
+  item.sellIn -= 1;
+});
 
 class Shop {
   public items: Item[];
